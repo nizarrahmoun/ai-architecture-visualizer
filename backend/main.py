@@ -20,11 +20,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
+@app.get("/api")
 async def root():
     return {"message": "AI Architecture Visualizer API", "status": "running"}
 
-@app.post("/generate-render")
+@app.post("/api/generate-render")
 async def generate_render(
     prompt: str = Form(...),
     file: UploadFile = File(...),

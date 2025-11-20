@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, Image as ImageIcon, Wand2, Download, Loader2, Layers, PenTool, Box } from 'lucide-react';
+import { Upload, Image as ImageIcon, Wand2, Download, Loader2, Layers, PenTool, Box, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -47,7 +47,7 @@ function App() {
     setError(null);
     
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
       const response = await axios.post(`${apiUrl}/generate-render`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -72,44 +72,46 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white selection:bg-blue-500/30">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] opacity-5 bg-cover bg-center fixed pointer-events-none" />
+    <div className="min-h-screen bg-italian-cream text-italian-charcoal selection:bg-italian-gold/30 font-sans">
+      {/* Background Texture */}
+      <div className="fixed inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/marble.png')] mix-blend-multiply"></div>
       
-      <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-6 py-12 relative z-10">
         
         {/* Header */}
-        <motion.div 
+        <motion.header 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="flex justify-between items-end mb-20 border-b border-italian-charcoal/10 pb-8"
         >
-          <div className="inline-flex items-center justify-center p-3 bg-blue-500/10 rounded-2xl mb-6 border border-blue-500/20 backdrop-blur-sm">
-            <Wand2 className="w-8 h-8 text-blue-400 mr-3" />
-            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-              AI Architect
+          <div>
+            <h1 className="text-6xl font-display font-bold text-italian-charcoal mb-2 tracking-tight">
+              STUDIO <span className="text-italian-terracotta">AI</span>
             </h1>
+            <p className="text-italian-charcoal/60 font-serif italic text-xl">
+              L'arte dell'architettura digitale
+            </p>
           </div>
-          <p className="text-neutral-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Transform sketches into photorealistic architectural visualizations using advanced AI.
-          </p>
-        </motion.div>
+          <div className="hidden md:block text-right">
+            <p className="text-sm font-medium tracking-widest uppercase text-italian-charcoal/40">Est. 2025</p>
+            <p className="text-sm font-medium tracking-widest uppercase text-italian-charcoal/40">Milano • Roma • Virtual</p>
+          </div>
+        </motion.header>
         
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-16">
           
           {/* INPUT SECTION */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="w-full lg:w-5/12 space-y-6"
+            className="w-full lg:w-4/12 space-y-10"
           >
-            {/* Upload Card */}
-            <div className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 backdrop-blur-xl hover:border-neutral-700 transition-colors duration-300">
+            {/* Step 1: Upload */}
+            <section>
               <div className="flex items-center mb-6">
-                <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center mr-4 border border-blue-500/20">
-                  <span className="text-blue-400 font-bold">1</span>
-                </div>
-                <h2 className="text-xl font-semibold text-white">Upload Source</h2>
+                <span className="font-display text-4xl text-italian-terracotta/20 mr-4">01</span>
+                <h2 className="text-2xl font-serif font-medium text-italian-charcoal">The Foundation</h2>
               </div>
 
               <div className="relative group">
@@ -120,107 +122,117 @@ function App() {
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                 />
                 <div className={`
-                  border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-300
-                  ${file ? 'border-blue-500/50 bg-blue-500/5' : 'border-neutral-700 hover:border-neutral-600 hover:bg-neutral-800/50'}
+                  border border-italian-charcoal/20 rounded-sm p-10 text-center transition-all duration-500
+                  ${file ? 'bg-white shadow-xl shadow-italian-charcoal/5' : 'bg-transparent hover:bg-white/50'}
                 `}>
                   {file ? (
                     <div className="relative z-10">
-                      <img 
-                        src={URL.createObjectURL(file)} 
-                        alt="Preview" 
-                        className="w-full h-48 object-contain rounded-lg shadow-2xl mb-4" 
-                      />
-                      <div className="flex items-center justify-center text-blue-400 text-sm font-medium">
-                        <ImageIcon className="w-4 h-4 mr-2" />
+                      <div className="p-2 bg-white shadow-sm inline-block transform -rotate-2 mb-4">
+                        <img 
+                          src={URL.createObjectURL(file)} 
+                          alt="Preview" 
+                          className="w-full h-40 object-cover grayscale contrast-125" 
+                        />
+                      </div>
+                      <div className="flex items-center justify-center text-italian-charcoal text-sm font-medium tracking-wide uppercase">
+                        <CheckCircle2 className="w-4 h-4 mr-2 text-italian-olive" />
                         {file.name}
                       </div>
                     </div>
                   ) : (
-                    <div className="py-8">
-                      <div className="w-16 h-16 rounded-full bg-neutral-800 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Upload className="w-8 h-8 text-neutral-400 group-hover:text-white transition-colors" />
+                    <div className="py-4">
+                      <div className="w-16 h-16 border border-italian-charcoal/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:border-italian-terracotta/50 transition-colors duration-500">
+                        <Upload className="w-6 h-6 text-italian-charcoal/40 group-hover:text-italian-terracotta transition-colors" />
                       </div>
-                      <p className="text-neutral-300 font-medium">Click or drop sketch here</p>
-                      <p className="text-neutral-500 text-sm mt-2">Supports JPG, PNG</p>
+                      <p className="text-italian-charcoal font-serif text-lg italic">Upload sketch or plan</p>
+                      <p className="text-italian-charcoal/40 text-xs mt-2 uppercase tracking-widest">JPG • PNG • WEBP</p>
                     </div>
                   )}
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* Controls Card */}
-            <div className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 backdrop-blur-xl">
+            {/* Step 2: Configuration */}
+            <section>
               <div className="flex items-center mb-6">
-                <div className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center mr-4 border border-purple-500/20">
-                  <span className="text-purple-400 font-bold">2</span>
-                </div>
-                <h2 className="text-xl font-semibold text-white">Configuration</h2>
+                <span className="font-display text-4xl text-italian-terracotta/20 mr-4">02</span>
+                <h2 className="text-2xl font-serif font-medium text-italian-charcoal">The Vision</h2>
               </div>
 
-              <div className="grid grid-cols-3 gap-3 mb-6">
+              <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
-                  { id: 'scribble', icon: PenTool, label: 'Sketch' },
-                  { id: 'canny', icon: Layers, label: 'CAD' },
-                  { id: 'depth', icon: Box, label: 'Massing' }
+                  { id: 'scribble', icon: PenTool, label: 'Schizzo' },
+                  { id: 'canny', icon: Layers, label: 'Tecnico' },
+                  { id: 'depth', icon: Box, label: 'Volume' }
                 ].map((mode) => (
                   <button
                     key={mode.id}
                     onClick={() => setControlType(mode.id)}
                     className={`
-                      p-4 rounded-xl border transition-all duration-300 flex flex-col items-center justify-center gap-2
+                      py-4 px-2 border transition-all duration-500 flex flex-col items-center justify-center gap-3
                       ${controlType === mode.id 
-                        ? 'bg-white text-black border-white shadow-lg shadow-white/10 scale-105' 
-                        : 'bg-neutral-800/50 border-neutral-700 text-neutral-400 hover:bg-neutral-800 hover:border-neutral-600'}
+                        ? 'bg-italian-charcoal text-white border-italian-charcoal' 
+                        : 'bg-transparent border-italian-charcoal/20 text-italian-charcoal/60 hover:border-italian-charcoal/40'}
                     `}
                   >
-                    <mode.icon className="w-5 h-5" />
-                    <span className="text-xs font-medium">{mode.label}</span>
+                    <mode.icon className="w-5 h-5" strokeWidth={1.5} />
+                    <span className="text-xs font-medium uppercase tracking-widest">{mode.label}</span>
                   </button>
                 ))}
               </div>
 
-              <div className="space-y-4">
-                <label className="text-sm font-medium text-neutral-400 ml-1">Style Prompt</label>
+              <div className="relative">
                 <textarea 
-                  className="w-full p-4 bg-neutral-950 border border-neutral-800 rounded-xl h-32 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition-all text-neutral-200 placeholder-neutral-600 resize-none"
+                  className="w-full p-6 bg-white border-l-2 border-italian-charcoal/10 focus:border-italian-terracotta outline-none transition-all text-italian-charcoal placeholder-italian-charcoal/30 resize-none font-serif text-lg leading-relaxed min-h-[160px]"
                   placeholder="Describe the materials, lighting, and atmosphere..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
+                <div className="absolute top-0 right-0 p-2">
+                  <PenTool className="w-4 h-4 text-italian-charcoal/20" />
+                </div>
               </div>
-            </div>
+            </section>
             
             {error && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm flex items-center"
+                className="p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm font-medium"
               >
-                <span className="mr-2">⚠️</span> {error}
+                {error}
               </motion.div>
             )}
             
-            {!adCompleted ? (
-              <button 
-                onClick={handleAdClick}
-                className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-5 rounded-2xl hover:from-yellow-500 hover:to-orange-500 transition-all font-semibold shadow-lg shadow-orange-900/20 hover:shadow-orange-900/40 hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-2"
-              >
-                <span>🔓</span> Complete Verification to Unlock Generator
-              </button>
-            ) : (
-              <button 
-                onClick={handleSubmit}
-                disabled={loading || !file || !prompt}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-5 rounded-2xl hover:from-blue-500 hover:to-purple-500 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 hover:-translate-y-1 active:translate-y-0"
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <Loader2 className="animate-spin mr-3 w-5 h-5" />
-                    Rendering...
-                  </div>
-                ) : "Generate Visualization"}
-              </button>
-            )}
+            <div className="pt-4">
+              {!adCompleted ? (
+                <button 
+                  onClick={handleAdClick}
+                  className="group w-full bg-italian-gold text-white py-6 px-8 hover:bg-italian-gold/90 transition-all duration-500 flex items-center justify-between shadow-xl shadow-italian-gold/20"
+                >
+                  <span className="font-display font-bold text-lg tracking-widest uppercase flex items-center gap-3">
+                    <Lock className="w-5 h-5" />
+                    Unlock Studio
+                  </span>
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                </button>
+              ) : (
+                <button 
+                  onClick={handleSubmit}
+                  disabled={loading || !file || !prompt}
+                  className="group w-full bg-italian-charcoal text-white py-6 px-8 hover:bg-italian-terracotta transition-all duration-500 flex items-center justify-between shadow-2xl shadow-italian-charcoal/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span className="font-display font-bold text-lg tracking-widest uppercase">
+                    {loading ? "Rendering..." : "Generate Masterpiece"}
+                  </span>
+                  {loading ? (
+                    <Loader2 className="animate-spin w-6 h-6" />
+                  ) : (
+                    <Wand2 className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                  )}
+                </button>
+              )}
+            </div>
           </motion.div>
 
           {/* OUTPUT SECTION */}
@@ -228,13 +240,17 @@ function App() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="w-full lg:w-7/12"
+            className="w-full lg:w-8/12"
           >
-            <div className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-2 backdrop-blur-xl h-full min-h-[600px] flex flex-col relative overflow-hidden group">
+            <div className="h-full min-h-[700px] bg-white p-4 shadow-2xl shadow-italian-charcoal/5 relative">
               
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              
-              <div className="flex-1 flex items-center justify-center rounded-2xl border border-neutral-800/50 bg-neutral-950/50 m-2 relative overflow-hidden">
+              {/* Frame details */}
+              <div className="absolute top-0 left-0 w-full h-full border border-italian-charcoal/5 pointer-events-none m-4 box-border"></div>
+              <div className="absolute bottom-8 right-8 z-20">
+                <span className="font-display text-6xl text-italian-charcoal/5 font-bold">03</span>
+              </div>
+
+              <div className="w-full h-full bg-italian-marble/30 flex items-center justify-center overflow-hidden relative">
                 <AnimatePresence mode="wait">
                   {loading ? (
                     <motion.div 
@@ -243,17 +259,18 @@ function App() {
                       exit={{ opacity: 0 }}
                       className="text-center z-10"
                     >
-                      <div className="relative w-24 h-24 mx-auto mb-6">
-                        <div className="absolute inset-0 border-4 border-blue-500/30 rounded-full animate-pulse" />
-                        <div className="absolute inset-0 border-t-4 border-blue-500 rounded-full animate-spin" />
+                      <div className="w-32 h-32 border border-italian-charcoal/10 rounded-full flex items-center justify-center mx-auto mb-8 relative">
+                        <div className="absolute inset-0 border-t-2 border-italian-terracotta rounded-full animate-spin"></div>
+                        <span className="font-serif italic text-italian-charcoal/40">AI</span>
                       </div>
-                      <h3 className="text-xl font-medium text-white mb-2">AI is dreaming...</h3>
-                      <p className="text-neutral-500">Analyzing geometry and applying materials</p>
+                      <h3 className="text-2xl font-display text-italian-charcoal mb-2">Crafting Vision</h3>
+                      <p className="text-italian-charcoal/50 font-serif italic">Applying materials, light, and shadow...</p>
                     </motion.div>
                   ) : generatedImage ? (
                     <motion.div 
-                      initial={{ opacity: 0, scale: 0.95 }}
+                      initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
                       className="relative w-full h-full group/image"
                     >
                       <img 
@@ -261,13 +278,13 @@ function App() {
                         alt="AI Generated Render" 
                         className="w-full h-full object-contain"
                       />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+                      <div className="absolute inset-0 bg-italian-charcoal/80 opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm">
                         <button
                           onClick={handleDownload}
-                          className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform flex items-center gap-2"
+                          className="bg-white text-italian-charcoal px-10 py-5 font-display font-bold tracking-widest uppercase hover:bg-italian-terracotta hover:text-white transition-colors duration-300 flex items-center gap-4"
                         >
                           <Download className="w-5 h-5" />
-                          Download High-Res
+                          Download Render
                         </button>
                       </div>
                     </motion.div>
@@ -275,13 +292,13 @@ function App() {
                     <motion.div 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-center text-neutral-600"
+                      className="text-center"
                     >
-                      <div className="w-24 h-24 rounded-3xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mx-auto mb-6 rotate-3">
-                        <Wand2 className="w-10 h-10 opacity-20" />
+                      <div className="mb-6 opacity-20">
+                        <Layers className="w-24 h-24 mx-auto text-italian-charcoal" strokeWidth={0.5} />
                       </div>
-                      <p className="font-medium text-lg">Ready to visualize</p>
-                      <p className="text-sm opacity-50 mt-2">Upload a sketch to begin</p>
+                      <h3 className="text-3xl font-display text-italian-charcoal/40 mb-2">The Canvas is Empty</h3>
+                      <p className="text-italian-charcoal/30 font-serif italic">Upload a sketch to begin the transformation</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
