@@ -4,11 +4,9 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://PASTE-YOUR-RENDER-URL-HERE/api/:splat"
+  to = "https://ai-architecture-visualizer-production.up.railway.app/api/:splat"
   status = 200
   force = true
-  
-  # Example: https://studio-ai-abc123.onrender.com/api/:splat
 
 [[redirects]]
   from = "/*"
