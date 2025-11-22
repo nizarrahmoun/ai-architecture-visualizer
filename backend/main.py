@@ -14,8 +14,8 @@ app = FastAPI()
 # Allow React to talk to Python
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Your React App
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins for production
+    allow_credentials=False,  # Set to False when using wildcard
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -204,4 +204,5 @@ async def generate_render(
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
