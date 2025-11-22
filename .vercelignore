@@ -1,8 +1,0 @@
-node_modules
-__pycache__
-.env
-.git
-.gitignore
-*.pyc
-frontend/node_modules
-backend/__pycache__

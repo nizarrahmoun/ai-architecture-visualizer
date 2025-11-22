@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, Image as ImageIcon, Wand2, Download, Loader2, Layers, PenTool, Box, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
+import { Upload, Wand2, Download, Loader2, Layers, PenTool, Box, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
 
 function App() {
   const [file, setFile] = useState(null);

@@ -64,27 +64,52 @@ npm start
 
 Frontend runs at: `http://localhost:3000`
 
-## 🚢 Deployment on Vercel
+## 🚢 Deployment
 
-This project is configured for a **monorepo deployment** on Vercel.
+### Frontend: Netlify
 
-1.  **Install Vercel CLI** (optional, or use the web dashboard):
+1.  **Deploy via Netlify CLI**:
     ```bash
-    npm install -g vercel
+    # Install Netlify CLI
+    npm install -g netlify-cli
+
+    # Login to Netlify
+    netlify login
+
+    # Deploy from root directory
+    netlify deploy --prod
     ```
 
-2.  **Deploy**:
-    Run the following command from the root directory:
-    ```bash
-    vercel
-    ```
+2.  **Deploy via Netlify Dashboard**:
+    - Go to [netlify.com](https://netlify.com) and connect your GitHub repository
+    - Build settings are auto-configured via `netlify.toml`
+    - Add environment variable: `REACT_APP_API_URL` (set to your backend URL + `/api`)
 
-3.  **Environment Variables**:
-    In your Vercel Project Settings, add the following environment variables:
-    - `NVIDIA_API_KEY`: Your NVIDIA API key.
-    - `REACT_APP_API_URL`: Set this to `/api` (or your full production URL + `/api`).
+### Backend: Render.com
 
-    *Note: The `vercel.json` file automatically configures the routing so that `/api/*` requests are handled by the Python backend and all other requests are served by the React frontend.*
+1.  **Create a Web Service** on [render.com](https://render.com):
+    - Connect your GitHub repository
+    - **Root Directory**: `backend`
+    - **Build Command**: `pip install -r requirements.txt`
+    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+2.  **Add Environment Variable**:
+    - `NVIDIA_API_KEY`: Your NVIDIA API key
+
+3.  **Update `netlify.toml`**:
+    - Replace `https://your-backend-url.onrender.com` with your actual Render backend URL
+
+### Alternative Backend: Railway.app
+
+```bash
+# Install Railway CLI
+npm install -g @railway/cli
+
+# Login and deploy
+railway login
+cd backend
+railway up
+```
 
 ## 📖 Usage
 
